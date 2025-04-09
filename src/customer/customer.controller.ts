@@ -8,7 +8,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
-import { CreateCustomerDto } from './dto/customer-client.dto';
+import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
 
 @Controller('customer')

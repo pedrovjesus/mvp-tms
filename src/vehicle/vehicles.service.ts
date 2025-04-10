@@ -26,7 +26,7 @@ export class VehicleService {
   async deleteVehicle(id: number): Promise<void> {
     const vehicle = await this.VehicleRepository.getVehicleById(id);
     if (!vehicle) {
-      throw new NotFoundException(`Cliente com o ID ${id} não existe`);
+      throw new NotFoundException(`Veiculo com o ID ${id} não existe`);
     }
     await this.VehicleRepository.deleteVehicle(id);
   }

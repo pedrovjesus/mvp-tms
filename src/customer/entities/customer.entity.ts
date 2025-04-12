@@ -1,8 +1,10 @@
 import { IsNotEmpty, MaxLength } from 'class-validator';
+import { Order } from 'src/Orders/entity/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -16,6 +18,9 @@ export class Customer {
   @IsNotEmpty({ message: 'O nome é obrigatório' })
   @MaxLength(100, { message: 'O nome deve ter no maximo 100 caracteres' })
   name: string;
+
+  @OneToMany(() => Order, (order) => order.client)
+  order: Order[];
 
   @CreateDateColumn()
   createdAt: Date;

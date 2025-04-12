@@ -1,8 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
+import { Order } from 'src/Orders/entity/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -36,6 +38,9 @@ export class Vehicle {
   @Column()
   @IsNotEmpty({ message: 'O renavam é obrigatório' })
   renavam: string;
+
+  @OneToMany(() => Order, (order) => order.vehicle)
+  order: Order[];
 
   @CreateDateColumn()
   createdAt: Date;

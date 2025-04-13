@@ -1,0 +1,6 @@
+export enum OrderStatus {
+  PENDENTE = 'PENDENTE',
+  EM_ANDAMENTO = 'ABERTO',
+  FINALIZADO = 'FINALIZADO',
+  CANCELADO = 'CANCELADO',
+}

@@ -1,7 +1,9 @@
+import { Order } from 'src/Orders/entity/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -46,6 +48,9 @@ export class Employer {
 
   @Column({ default: true })
   active: boolean;
+
+  @OneToMany(() => Order, (order) => order.driver)
+  order: Order[];
 
   @CreateDateColumn()
   createdAt: Date;

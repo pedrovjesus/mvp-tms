@@ -19,7 +19,7 @@ export class Customer {
   @MaxLength(100, { message: 'O nome deve ter no maximo 100 caracteres' })
   name: string;
 
-  @OneToMany(() => Order, (order) => order.client)
+  @OneToMany(() => Order, (order) => order.customer)
   order: Order[];
 
   @CreateDateColumn()

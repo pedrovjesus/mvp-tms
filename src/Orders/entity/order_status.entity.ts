@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Order } from './order.entity';
+import { OrderStatus } from '../enum/orderStatus.enum';
 
 @Entity()
 export class OrderStatusHistory {
@@ -7,10 +14,14 @@ export class OrderStatusHistory {
   id: number;
 
   @ManyToOne(() => Order, (order) => order.statusHistory)
+  @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: OrderStatus,
+  })
+  status: OrderStatus;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   changedAt: Date;

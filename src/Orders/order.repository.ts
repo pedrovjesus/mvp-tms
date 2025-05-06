@@ -54,7 +54,7 @@ export class OrderRepository extends Repository<Order> {
     const order = this.orderRepo.create({
       customer,
       vehicle,
-      driver,
+      driver: driver,
       origin: createOrderDto.origin,
       destination: createOrderDto.destination,
       departureDate: new Date(createOrderDto.departureDate),

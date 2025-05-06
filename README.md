@@ -1,85 +1,107 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+**MVP TMS - Transportation Management System**
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este projeto é um **MVP** (Minimum Viable Product) de um TMS desenvolvido em **NestJS** e **TypeORM**, com foco em funcionalidades essenciais para gerenciamento de transporte: pedidos, roteirização, veículos, motoristas, acompanhamento em tempo real e controle de custos.
+Um projeto pessoal que nasceu com a ideia de solucionar problemas que vejo no dia a dia em muitas transportadoras.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🛠️ Tecnologias e Ferramentas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Framework**: NestJS (vX.X.X)
+- **ORM**: TypeORM (vX.X.X)
+- **Banco de Dados**: PostgreSQL (ou MySQL)
+- **Linguagem**: TypeScript
+- **Gerenciamento de Dependências**: npm / yarn
+- **Controle de Versão**: Git
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## 🚀 Funcionalidades Principais
 
-## Compile and run the project
+1. **Clientes & Pedidos**
 
-```bash
-# development
-$ npm run start
+   - Cadastro de clientes (pessoa física ou jurídica)
+   - Registro de pedidos e itens de pedido
 
-# watch mode
-$ npm run start:dev
+2. **Rotas & Paradas**
 
-# production mode
-$ npm run start:prod
-```
+   - Definição de rotas reutilizáveis com paradas sequenciais (latitude/longitude)
+   - Planejamento de janelas de chegada
+   - Em desenvolvimento*
 
-## Run tests
+3. **Veículos & Motoristas**
 
-```bash
-# unit tests
-$ npm run test
+   - Cadastro de veículos e tipos de veículos
+   - Histórico de IPVA, revisões e consumo (km/L)
+   - Cadastro de motoristas, disponibilidade e vínculo com contas de usuário
+   - Em desenvolvimento*
 
-# e2e tests
-$ npm run test:e2e
+4. **Controle de Custos**
 
-# test coverage
-$ npm run test:cov
-```
+   - Registro de custos de viagem (pedágio, alimentação, combustível)
+   - Cálculo automático de IPVA anual e média de consumo
+   - Custos de manutenção e revisões de veículos
+   - Em desenvolvimento*
 
-## Resources
+5. **Segurança & Permissões**
 
-Check out a few resources that may come in handy when working with NestJS:
+   - Autenticação de usuários
+   - Perfis e permissões granular para acesso a recursos
+   - Em desenvolvimento*
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## ⚙️ Instalação e Configuração
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. **Clone o repositório**
 
-## Stay in touch
+   ```bash
+   git clone https://github.com/pedrovjesus/mvp-tms.git
+   cd mvp-tms
+   ```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+2. **Instale dependências**
 
-## License
+   ```bash
+   npm install
+   # ou yarn install
+   ```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+3. **Banco de Dados**
+
+   - Crie o database `base` no PostgreSQL ou MySql
+   - Execute as migrations:
+     ```bash
+     npm run typeorm migration:run
+     ```
+
+4. **Inicie a aplicação**
+
+   ```bash
+   npm run start:dev
+   ```
+
+A API estará disponível em `http://localhost:3000`.
+
+---
+
+## 📦 Scripts Disponíveis
+
+- `npm run start` - Inicia em modo de produção
+- `npm run start:dev` - Inicia em modo de desenvolvimento (Watch)
+- `npm run test` - Executa testes unitários
+- `npm run lint` - Executa linting
+- `npm run typeorm` - Helper para comandos TypeORM
+
+---
+
+## 🛣️ Próximos Passos / Roadmap
+
+- Implementar Dashboard com KPIs (tempo médio de entrega, consumo médio)
+- Otimização de rotas via integração com API de mapas (Google/Mapbox)
+- Implementar versionamento de API (v1, v2)
+- Implementar logica de controle de gastos
+- Envio de dados excel de frota, funcionarios e despesas
+- Testes end-to-end (e2e)
+
+---

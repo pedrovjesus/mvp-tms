@@ -43,8 +43,8 @@ export class Vehicle {
   @OneToMany(() => Order, (order) => order.vehicle)
   order: Order[];
 
-  @OneToMany(() => Trip, (trip) => trip.vehicle)
-  trips: Trip[];
+  @OneToMany(() => Trip, (trip) => trip.vehicleId)
+  tripsId: Trip[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -1,5 +1,6 @@
 import { Employer } from 'src/employer/entity/employer.entity';
 import { Order } from 'src/Orders/entity/order.entity';
+import { OrderStatus } from 'src/Orders/enum/orderStatus.enum';
 import { Vehicle } from 'src/vehicle/entity/vehicle.entity';
 import {
   Column,
@@ -14,14 +15,14 @@ export class Trip {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Order, (order) => order.trips)
-  order: Order;
+  @ManyToOne(() => Order, (order) => order.tripsId)
+  orderId: Order;
 
-  @ManyToOne(() => Vehicle, (vehicle) => vehicle.trips)
-  vehicle: Vehicle;
+  @ManyToOne(() => Vehicle, (vehicle) => vehicle.tripsId)
+  vehicleId: Vehicle;
 
-  @ManyToOne(() => Employer, (employer) => employer.trips)
-  driver: Employer;
+  @ManyToOne(() => Employer, (employer) => employer.tripsId)
+  driverId: Employer;
 
   @Column({ type: 'text', nullable: true })
   plannedRoute: string;
@@ -32,8 +33,8 @@ export class Trip {
   @Column({ type: 'timestamp', nullable: true })
   endDate: Date;
 
-  @Column({ type: 'varchar', length: 50, default: 'pendente' })
-  status: string;
+  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.PENDENTE })
+  status: OrderStatus;
 
   @Column({ type: 'text', nullable: true })
   notes: string;

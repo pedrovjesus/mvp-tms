@@ -53,8 +53,8 @@ export class Employer {
   @OneToMany(() => Order, (order) => order.driver)
   order: Order[];
 
-  @OneToMany(() => Trip, (trip) => trip.driver)
-  trips: Trip[];
+  @OneToMany(() => Trip, (trip) => trip.driverId)
+  tripsId: Trip[];
 
   @CreateDateColumn()
   createdAt: Date;

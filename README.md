@@ -7,8 +7,8 @@ Um projeto pessoal que nasceu com a ideia de solucionar problemas que vejo no di
 
 ## 🛠️ Tecnologias e Ferramentas
 
-- **Framework**: NestJS (vX.X.X)
-- **ORM**: TypeORM (vX.X.X)
+- **Framework**: NestJS
+- **ORM**: TypeORM
 - **Banco de Dados**: PostgreSQL (ou MySQL)
 - **Linguagem**: TypeScript
 - **Gerenciamento de Dependências**: npm / yarn
@@ -97,8 +97,7 @@ A API estará disponível em `http://localhost:3000`.
 
 ## 🛣️ Próximos Passos / Roadmap
 
-- Implementar Dashboard com KPIs (tempo médio de entrega, consumo médio)
-- Otimização de rotas via integração com API de mapas (Google/Mapbox)
+- Implementar respostas com KPIs (tempo médio de entrega, consumo médio)
 - Implementar versionamento de API (v1, v2)
 - Implementar logica de controle de gastos
 - Envio de dados excel de frota, funcionarios e despesas

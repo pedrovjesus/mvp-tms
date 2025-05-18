@@ -1,4 +1,5 @@
 import { Order } from 'src/Orders/entity/order.entity';
+import { Trip } from 'src/trips/entity/trip.entity';
 import {
   Column,
   CreateDateColumn,
@@ -51,6 +52,9 @@ export class Employer {
 
   @OneToMany(() => Order, (order) => order.driver)
   order: Order[];
+
+  @OneToMany(() => Trip, (trip) => trip.driver)
+  trips: Trip[];
 
   @CreateDateColumn()
   createdAt: Date;

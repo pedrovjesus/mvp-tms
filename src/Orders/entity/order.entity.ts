@@ -11,6 +11,7 @@ import {
 import { OrderStatusHistory } from './order_status.entity';
 import { Employer } from 'src/employer/entity/employer.entity';
 import { OrderStatus } from '../enum/orderStatus.enum';
+import { Trip } from 'src/trips/entity/trip.entity';
 
 @Entity()
 export class Order {
@@ -47,6 +48,9 @@ export class Order {
 
   @ManyToOne(() => Employer, (employer) => employer.order)
   driver: Employer;
+
+  @OneToMany(() => Trip, (trip) => trip.order)
+  trips: Trip[];
 
   @CreateDateColumn()
   createdAt: Date;

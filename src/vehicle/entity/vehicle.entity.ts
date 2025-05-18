@@ -1,5 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { Order } from 'src/Orders/entity/order.entity';
+import { Trip } from 'src/trips/entity/trip.entity';
 import {
   Column,
   CreateDateColumn,
@@ -41,6 +42,9 @@ export class Vehicle {
 
   @OneToMany(() => Order, (order) => order.vehicle)
   order: Order[];
+
+  @OneToMany(() => Trip, (trip) => trip.vehicle)
+  trips: Trip[];
 
   @CreateDateColumn()
   createdAt: Date;

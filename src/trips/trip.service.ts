@@ -1,0 +1,58 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Trip } from './entity/trip.entity';
+import { TripRepository } from './trip.repository';
+
+@Injectable()
+export class TripService {
+  constructor(
+    @InjectRepository(Trip)
+    private readonly tripRepository: TripRepository,
+  ) {}
+
+  async createTrip(trip: Trip): Promise<Trip | Error> {
+    if (!trip.driverId || !trip.vehicleId) {
+      throw new Error('Driver and Vehicle IDs are required to create a trip.');
+    }
+    try {
+      return this.tripRepository.createTrip(trip);
+    } catch (error) {
+      throw new Error(`Erro ao criar a viagem: ${error.message}`);
+    }
+  }
+  async findAllTrips(): Promise<Trip[]> {
+    try {
+      return this.tripRepository.findAllTrips();
+    } catch (error) {
+      throw new Error(`Erro ao buscar as viagens: ${error.message}`);
+    }
+  }
+
+  async findTripById(id: number): Promise<Trip | Error> {
+    try {
+      return this.tripRepository.findTripById(id);
+    } catch (error) {
+      throw new Error(`Erro ao buscar a viagem com ID ${id}: ${error.message}`);
+    }
+  }
+
+  async deleteTrip(id: number): Promise<void | Error> {
+    try {
+      await this.tripRepository.deleteTrip(id);
+    } catch (error) {
+      throw new Error(
+        `Erro ao deletar a viagem com ID ${id}: ${error.message}`,
+      );
+    }
+  }
+
+  async updateTrip(id: number, trip: Partial<Trip>): Promise<Trip | Error> {
+    try {
+      return this.tripRepository.updateTrip(id, trip);
+    } catch (error) {
+      throw new Error(
+        `Erro ao atualizar a viagem com ID ${id}: ${error.message}`,
+      );
+    }
+  }
+}

@@ -8,6 +8,11 @@ import { EmployerModule } from './employer/employer.module';
 import { AddressModule } from './adress/address.module';
 import { OrderModule } from './orders/order.module';
 import { TripModule } from './trips/trip.module';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const isTest = process.env.NODE_ENV === 'test';
 
 @Module({
   imports: [
@@ -17,7 +22,7 @@ import { TripModule } from './trips/trip.module';
       port: 3306,
       username: 'root',
       password: '',
-      database: 'base',
+      database: isTest ? 'base_test' : 'base',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
       synchronize: false,

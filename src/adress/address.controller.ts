@@ -11,11 +11,11 @@ import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressService } from './address.service';
 import { Address } from './entities/address.entity';
 
-@Controller('adress')
+@Controller('address')
 export class AddressController {
   constructor(private readonly adressService: AddressService) {}
 
-  @Post('/create')
+  @Post()
   async create(
     @Body(new ValidationPipe()) createAdressDto: CreateAddressDto,
   ): Promise<Address> {

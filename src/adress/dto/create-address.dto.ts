@@ -1,7 +1,7 @@
 import { IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreateAddressDto {
-  @IsNotEmpty({ message: 'O nome é obrigatório' })
+  @IsNotEmpty({ message: 'O cep é obrigatório' })
   @MaxLength(20, { message: 'O CEP deve ter no máximo 20 caracteres' })
   cep: number;
 

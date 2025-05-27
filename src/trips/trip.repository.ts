@@ -12,10 +12,11 @@ export class TripRepository extends Repository<Trip> {
     super(tripRepo.target, tripRepo.manager, tripRepo.queryRunner);
   }
 
-  async createTrip(trip: Trip): Promise<Trip> {
+  async createTrip(trip: Partial<Trip>): Promise<Trip> {
     const newTrip = this.tripRepo.create(trip);
     return await this.tripRepo.save(newTrip);
   }
+
   async findTripById(id: number): Promise<Trip> {
     const trip = await this.tripRepo.findOneBy({ id });
     if (!trip) {

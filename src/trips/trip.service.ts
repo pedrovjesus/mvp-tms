@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Trip } from './entity/trip.entity';
 import { TripRepository } from './trip.repository';
+import { CreateTripDto } from './dto/create-trip';
 
 @Injectable()
 export class TripService {
@@ -10,16 +11,27 @@ export class TripService {
     private readonly tripRepository: TripRepository,
   ) {}
 
-  async createTrip(trip: Trip): Promise<Trip | Error> {
-    if (!trip.driverId || !trip.vehicleId) {
+  async createTrip(createTripDto: CreateTripDto): Promise<Trip | Error> {
+    const { orderId, driverId, vehicleId, ...rest } = createTripDto;
+
+    if (!driverId || !vehicleId) {
       throw new Error('Driver and Vehicle IDs are required to create a trip.');
     }
+
+    const trip = {
+      ...rest,
+      orderId: { id: orderId },
+      driverId: { id: driverId },
+      vehicleId: { id: vehicleId },
+    };
+
     try {
-      return this.tripRepository.createTrip(trip);
+      return this.tripRepository.createTrip(trip as Partial<Trip>);
     } catch (error) {
       throw new Error(`Erro ao criar a viagem: ${error.message}`);
     }
   }
+
   async findAllTrips(): Promise<Trip[]> {
     try {
       return this.tripRepository.findAllTrips();

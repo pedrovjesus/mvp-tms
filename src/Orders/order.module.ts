@@ -11,4 +11,4 @@ import { OrderService } from './order.service';
   controllers: [OrderController],
   providers: [OrderRepository, OrderService],
 })
-export class EmployerModule {}
+export class OrderModule {}

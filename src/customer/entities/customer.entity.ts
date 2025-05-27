@@ -1,5 +1,5 @@
 import { IsNotEmpty, MaxLength } from 'class-validator';
-import { Order } from 'src/Orders/entity/order.entity';
+import { Order } from 'src/orders/entity/order.entity';
 import {
   Column,
   CreateDateColumn,

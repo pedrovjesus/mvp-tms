@@ -1,6 +1,6 @@
 import { Employer } from 'src/employer/entity/employer.entity';
-import { Order } from 'src/Orders/entity/order.entity';
-import { OrderStatus } from 'src/Orders/enum/orderStatus.enum';
+import { Order } from 'src/orders/entity/order.entity';
+import { OrderStatus } from 'src/orders/enum/orderStatus.enum';
 import { Vehicle } from 'src/vehicle/entity/vehicle.entity';
 import {
   Column,

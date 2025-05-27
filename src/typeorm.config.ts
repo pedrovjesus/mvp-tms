@@ -4,8 +4,8 @@ import { DataSource } from 'typeorm';
 import { Customer } from './customer/entities/customer.entity';
 import { Vehicle } from './vehicle/entity/vehicle.entity';
 import * as path from 'path';
-import { Order } from './Orders/entity/order.entity';
-import { OrderStatusHistory } from './Orders/entity/order_status.entity';
+import { Order } from './orders/entity/order.entity';
+import { OrderStatusHistory } from './orders/entity/order_status.entity';
 import { Employer } from './employer/entity/employer.entity';
 
 export const AppDataSource = new DataSource({

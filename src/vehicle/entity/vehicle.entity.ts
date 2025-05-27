@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { Order } from 'src/Orders/entity/order.entity';
+import { Order } from 'src/orders/entity/order.entity';
 import { Trip } from 'src/trips/entity/trip.entity';
 import {
   Column,

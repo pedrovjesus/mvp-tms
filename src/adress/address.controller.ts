@@ -8,12 +8,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
-import { AdressService } from './address.service';
+import { AddressService } from './address.service';
 import { Address } from './entities/address.entity';
 
 @Controller('adress')
 export class AdressController {
-  constructor(private readonly adressService: AdressService) {}
+  constructor(private readonly adressService: AddressService) {}
 
   @Post('/create')
   async create(

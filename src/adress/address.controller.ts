@@ -12,7 +12,7 @@ import { AddressService } from './address.service';
 import { Address } from './entities/address.entity';
 
 @Controller('adress')
-export class AdressController {
+export class AddressController {
   constructor(private readonly adressService: AddressService) {}
 
   @Post('/create')

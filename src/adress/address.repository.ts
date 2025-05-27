@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Address } from './entities/adress.entity';
-import { CreateAddressDto } from './dto/create-adress.dto';
+import { Address } from './entities/address.entity';
+import { CreateAddressDto } from './dto/create-address.dto';
 
 @Injectable()
 export class AddressRepository extends Repository<Address> {

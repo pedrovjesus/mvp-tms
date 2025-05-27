@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateAddressDto } from './dto/create-adress.dto';
-import { AddressRepository } from './adress.repository';
-import { Address } from './entities/adress.entity';
+import { CreateAddressDto } from './dto/create-address.dto';
+import { AddressRepository } from './address.repository';
+import { Address } from './entities/address.entity';
 
 @Injectable()
-export class AdressService {
+export class AddressService {
   constructor(private readonly addressRepository: AddressRepository) {}
   async createAddress(createAddressDto: CreateAddressDto): Promise<Address> {
     const cep = createAddressDto.cep;

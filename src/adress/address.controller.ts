@@ -7,9 +7,9 @@ import {
   Post,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateAddressDto } from './dto/create-adress.dto';
-import { AdressService } from './adress.service';
-import { Address } from './entities/adress.entity';
+import { CreateAddressDto } from './dto/create-address.dto';
+import { AdressService } from './address.service';
+import { Address } from './entities/address.entity';
 
 @Controller('adress')
 export class AdressController {

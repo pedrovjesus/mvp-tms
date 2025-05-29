@@ -1,11 +1,8 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressRepository } from './address.repository';
 import { Address } from './entities/address.entity';
+import { UpdateAddressDto } from './dto/update-adress.dto';
 
 @Injectable()
 export class AddressService {
@@ -19,20 +16,6 @@ export class AddressService {
       throw new BadRequestException('Formato de CEP inválido.');
     }
 
-    // Verifica se já existe
-    try {
-      await this.addressRepository.getOneAddress({ cep: cepString });
-      // Se não lançar NotFoundException, significa que já existe
-      throw new BadRequestException('Este CEP já está cadastrado.');
-    } catch (err) {
-      if (!(err instanceof NotFoundException)) {
-        // Se for outro erro, repassa
-        throw err;
-      }
-      // Se for NotFoundException, continua a criação
-    }
-
-    // Cria e persiste
     console.log('CEP recebido no service:', createAddressDto.cep);
     return this.addressRepository.createAddress(createAddressDto);
   }
@@ -63,5 +46,14 @@ export class AddressService {
 
     // Agora apaga
     await this.addressRepository.deleteAddress(filter);
+  }
+
+  async update(
+    id: number,
+    updateAddressDto: UpdateAddressDto,
+  ): Promise<Address> {
+    const address = await this.addressRepository.getOneAddress({ id });
+    Object.assign(address, updateAddressDto);
+    return this.addressRepository.createAddress(address);
   }
 }

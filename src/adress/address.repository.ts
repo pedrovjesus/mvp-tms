@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Address } from './entities/address.entity';
 import { CreateAddressDto } from './dto/create-address.dto';
+import { UpdateAddressDto } from './dto/update-adress.dto';
 
 @Injectable()
 export class AddressRepository {
@@ -55,5 +56,20 @@ export class AddressRepository {
       return;
     }
     throw new Error('Você deve informar id ou cep para deletar');
+  }
+
+  async updateAddress(
+    filter: { id?: number; cep?: string },
+    dto: UpdateAddressDto,
+  ): Promise<Address> {
+    const address = await this.getOneAddress(filter);
+    console.log('Endereço encontrado para atualização:', address);
+    if (!address) {
+      throw new NotFoundException(
+        `Endereço com ID ${filter.id} não encontrado.`,
+      );
+    }
+    const updatedAddress = Object.assign(address, dto);
+    return this.repo.save(updatedAddress);
   }
 }

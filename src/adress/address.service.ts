@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressRepository } from './address.repository';
 import { Address } from './entities/address.entity';
@@ -6,59 +10,58 @@ import { Address } from './entities/address.entity';
 @Injectable()
 export class AddressService {
   constructor(private readonly addressRepository: AddressRepository) {}
-  async createAddress(createAddressDto: CreateAddressDto): Promise<Address> {
-    const cep = createAddressDto.cep;
-    const cepString = cep.toString();
 
-    //this is a just regex to validate test to the cep format
+  async createAddress(createAddressDto: CreateAddressDto): Promise<Address> {
+    const cepString = String(createAddressDto.cep);
+
+    // Validação de formato de CEP
     if (!/^\d{5}-?\d{3}$/.test(cepString)) {
       throw new BadRequestException('Formato de CEP inválido.');
     }
 
-    // Verifica se o CEP já está cadastrado
-    const existingAddress = await this.addressRepository.findOne({
-      where: { cep },
-    });
-    if (existingAddress) {
+    // Verifica se já existe
+    try {
+      await this.addressRepository.getOneAddress({ cep: cepString });
+      // Se não lançar NotFoundException, significa que já existe
       throw new BadRequestException('Este CEP já está cadastrado.');
+    } catch (err) {
+      if (!(err instanceof NotFoundException)) {
+        // Se for outro erro, repassa
+        throw err;
+      }
+      // Se for NotFoundException, continua a criação
     }
 
-    // Cria e salva o endereço
-    const newAddress = this.addressRepository.create(createAddressDto);
-    return this.addressRepository.save(newAddress);
+    // Cria e persiste
+    console.log('CEP recebido no service:', createAddressDto.cep);
+    return this.addressRepository.createAddress(createAddressDto);
   }
 
-  async getAllAddress(): Promise<Address[]> {
-    return this.addressRepository.find();
+  async findAll(): Promise<Address[]> {
+    return this.addressRepository.getAllAddresses();
   }
 
-  async getAddressById(id: number): Promise<Address> {
-    const address = await this.addressRepository.findOne({ where: { id } });
-    if (!address) {
-      throw new BadRequestException(`Endereço com o ID ${id} não existe`);
+  async findOne(filter: { id?: number; cep?: string }): Promise<Address> {
+    if (!filter.id && !filter.cep) {
+      throw new BadRequestException(
+        'Você deve informar o id ou o cep para busca',
+      );
     }
-    return address;
-  }
-  async deleteAddress(id: number): Promise<void> {
-    const address = await this.addressRepository.findOne({ where: { id } });
-    if (!address) {
-      throw new BadRequestException(`Endereço com o ID ${id} não existe`);
-    }
-    await this.addressRepository.delete(id);
-  }
-  async getAddressByCep(cep: number): Promise<Address> {
-    const address = await this.addressRepository.findOne({ where: { cep } });
-    if (!address) {
-      throw new BadRequestException(`Endereço com o CEP ${cep} não existe`);
-    }
-    return address;
+
+    return this.addressRepository.getOneAddress(filter);
   }
 
-  async deleteAddressByCep(cep: number): Promise<void> {
-    const address = await this.addressRepository.findOne({ where: { cep } });
-    if (!address) {
-      throw new BadRequestException(`Endereço com o CEP ${cep} não existe`);
+  async delete(filter: { id?: number; cep?: string }): Promise<void> {
+    if (!filter.id && !filter.cep) {
+      throw new BadRequestException(
+        'Você deve informar id ou cep para deletar',
+      );
     }
-    await this.addressRepository.delete(address.id);
+
+    // Vai lançar NotFoundException se não achar
+    await this.addressRepository.getOneAddress(filter);
+
+    // Agora apaga
+    await this.addressRepository.deleteAddress(filter);
   }
 }

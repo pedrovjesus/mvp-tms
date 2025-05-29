@@ -15,7 +15,7 @@ export class Address {
   @Column()
   @IsNotEmpty({ message: 'O CEP é obrigatório' })
   @MaxLength(20, { message: 'O CEP deve ter no maximo 20 caracteres' })
-  cep: number;
+  cep: string;
 
   @Column()
   @IsNotEmpty({ message: 'O número é obrigatório' })

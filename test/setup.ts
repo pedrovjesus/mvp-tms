@@ -9,7 +9,6 @@ async function clearDatabase() {
 }
 
 beforeAll(async () => {
-  console.log('🏁 Iniciando testes E2E...');
   await testDataSource.initialize();
   await testDataSource.synchronize(true);
   await testDataSource.query('SET FOREIGN_KEY_CHECKS=0');
@@ -27,7 +26,6 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  console.log('🧹 Limpando o banco de dados...');
   await testDataSource.query('SET FOREIGN_KEY_CHECKS=0');
   await clearDatabase();
   await testDataSource.query('SET FOREIGN_KEY_CHECKS=1');

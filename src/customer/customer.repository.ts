@@ -5,28 +5,45 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 
 @Injectable()
-export class CustomerRepository extends Repository<Customer> {
-  constructor(@InjectRepository(Customer) repository: Repository<Customer>) {
-    super(repository.target, repository.manager, repository.queryRunner);
-  }
+export class CustomerRepository {
+  constructor(
+    @InjectRepository(Customer)
+    private readonly repo: Repository<Customer>,
+  ) {}
 
-  async createCustomer(
-    createCustomertDto: CreateCustomerDto,
-  ): Promise<Customer> {
-    const { name } = createCustomertDto;
-    const customer = this.create({ name });
-    return this.save(customer);
+  async createCustomer(dto: CreateCustomerDto): Promise<Customer> {
+    const customer = this.repo.create(dto);
+    return this.repo.save(customer);
   }
 
   async getAllCustomers(): Promise<Customer[]> {
-    return this.find();
+    return this.repo.find();
   }
 
-  async getCustomerById(id: number): Promise<Customer | undefined> {
-    return this.findOne({ where: { id } });
-  }
-
-  async deleteCustomer(id: number): Promise<void> {
-    await this.delete(id);
+  async getOneCustomer(filter: {
+    id?: number;
+    cpfcnpj?: string;
+  }): Promise<Customer | Error> {
+    try {
+      if (filter.id) {
+        const customer = await this.repo.findOneBy({ id: filter.id });
+        if (!Customer) {
+          throw new Error(`Cliente com ID ${filter.id} não encontrado.`);
+        }
+        return customer;
+      }
+      if (filter.cpfcnpj) {
+        const customer = await this.repo.findOneBy({ cpfCnpj: filter.cpfcnpj });
+        if (!customer) {
+          throw new Error(
+            `Cliente com CPF/CNPJ ${filter.cpfcnpj} não encontrado.`,
+          );
+        }
+        return customer;
+      }
+      throw new Error('É necessário informar o id ou o cpfcnpj para busca');
+    } catch (error) {
+      throw new Error(`Erro ao buscar cliente: ${error.message}`);
+    }
   }
 }

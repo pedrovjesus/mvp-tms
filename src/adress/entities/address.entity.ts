@@ -39,8 +39,10 @@ export class Address {
   @MaxLength(2, { message: 'O estado deve ter no maximo 2 caracteres' })
   uf: string;
 
-  //   @OneToMany(() => Order, (order) => order.customer)
-  //   order: Order[];
+  @Column()
+  @IsNotEmpty({ message: 'O bairro é obrigatório' })
+  @MaxLength(100, { message: 'O bairro deve ter no maximo 100 caracteres' })
+  neighborhood: string;
 
   @CreateDateColumn()
   createdAt: Date;

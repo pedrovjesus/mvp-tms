@@ -1,4 +1,4 @@
-import { IsNotEmpty, Max, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, Max, MaxLength } from 'class-validator';
 
 export class CreateAddressDto {
   @IsNotEmpty({ message: 'O cep é obrigatório' })
@@ -11,9 +11,14 @@ export class CreateAddressDto {
 
   @IsNotEmpty({ message: 'O número é obrigatório' })
   @Max(99999, { message: 'O número deve ter no máximo 5 dígitos' })
+  @IsNumber({}, { message: 'O número deve ser um valor numérico' })
   number: number;
 
   complement?: string;
+
+  @IsNotEmpty({ message: 'O bairro é obrigatório' })
+  @MaxLength(100, { message: 'O bairro deve ter no máximo 100 caracteres' })
+  neighborhood: string;
 
   @IsNotEmpty({ message: 'A cidade é obrigatória' })
   @MaxLength(50, { message: 'A cidade deve ter no máximo 50 caracteres' })

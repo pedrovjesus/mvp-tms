@@ -18,6 +18,7 @@ describe('AddressController (e2e)', () => {
         .send({
           city: 'Campinas',
           uf: 'SP',
+          neighborhood: 'centro',
           street: 'Rua Exemplo',
           number: 123, // número como número
           cep: '13000-000',
@@ -43,6 +44,7 @@ describe('AddressController (e2e)', () => {
           street: 'Rua sem CEP',
           city: 'Campinas',
           uf: 'SP',
+          neighborhood: 'centro',
         });
 
       console.log('Validation error:', response.body);
@@ -64,6 +66,7 @@ describe('AddressController (e2e)', () => {
       let response = await request(app.getHttpServer()).post('/address').send({
         city: 'Campinas',
         uf: 'SP',
+        neighborhood: 'centro',
         street: 'Rua Exemplo',
         number: 123,
         cep: '13000-000',
@@ -85,6 +88,7 @@ describe('AddressController (e2e)', () => {
       let response = await request(app.getHttpServer()).post('/address').send({
         city: 'Campinas',
         uf: 'SP',
+        neighborhood: 'centro',
         street: 'Rua Exemplo',
         number: 123,
         cep: '13000-000',
@@ -95,6 +99,7 @@ describe('AddressController (e2e)', () => {
         .send({
           city: 'São Paulo',
           uf: 'SP',
+          neighborhood: 'centro',
           street: 'Rua Atualizada',
           number: 456,
           cep: '01000-000',
@@ -113,6 +118,7 @@ describe('AddressController (e2e)', () => {
           uf: 'XX',
           street: 'Rua Inexistente',
           number: 0,
+          neighborhood: 'centro',
           cep: '00000-000',
           complement: 'Apto 000',
         })
@@ -125,6 +131,7 @@ describe('AddressController (e2e)', () => {
         uf: 'SP',
         street: 'Rua Exemplo',
         number: 123,
+        neighborhood: 'centro',
         cep: '13000-000',
         complement: 'Apto 101',
       }); //cria um endereço para deletar

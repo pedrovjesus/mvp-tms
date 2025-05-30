@@ -3,37 +3,67 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
+  HttpCode,
+  HttpStatus,
   Post,
+  Put,
+  Query,
+  UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
+import { FindCustomerDto } from './dto/find-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Controller('customer')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
-
   @Post()
   async create(
-    @Body(new ValidationPipe()) createCustomerDto: CreateCustomerDto,
+    @Body(ValidationPipe) dto: CreateCustomerDto,
   ): Promise<Customer> {
-    return this.customerService.createCustomer(createCustomerDto);
+    return this.customerService.create(dto);
   }
 
   @Get()
-  async findAll(): Promise<Customer[]> {
-    return this.customerService.getAllCustomer();
+  @HttpCode(HttpStatus.OK)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async find(@Query() query: FindCustomerDto): Promise<Customer | Customer[]> {
+    const { id, cpfcnpj, name } = query;
+
+    if (!id && !cpfcnpj && !name) {
+      return this.customerService.findAll();
+    }
+
+    const idNumber = id ? Number(id) : undefined;
+
+    return this.customerService.findOne({
+      id: idNumber,
+      cpfcnpj: cpfcnpj,
+      name: name,
+    });
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Customer> {
-    return this.customerService.getCustomerById(+id);
+  @Put()
+  @HttpCode(HttpStatus.OK)
+  async update(
+    @Query('id') id: string,
+    @Body(ValidationPipe) dto: UpdateCustomerDto,
+  ): Promise<Customer> {
+    const idNumber = Number(id);
+    return this.customerService.update(idNumber, dto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.customerService.deleteCustomer(+id);
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(
+    @Query('id') id?: string,
+    @Query('cpfcnpj') cpfcnpj?: string,
+  ): Promise<void> {
+    const idNumber = id ? Number(id) : undefined;
+
+    await this.customerService.remove({ id: idNumber, cpfcnpj });
   }
 }

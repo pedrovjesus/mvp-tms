@@ -1,39 +1,74 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CustomerRepository } from './customer.repository';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomerService {
   constructor(private readonly customerRepository: CustomerRepository) {}
+  async create(dto: CreateCustomerDto): Promise<Customer> {
+    const existingCustomer = await this.customerRepository.getOneCustomer({
+      cpfcnpj: dto.cpfCnpj,
+    });
 
-  async createCustomer(
-    createCustomerDto: CreateCustomerDto,
-  ): Promise<Customer> {
-    /* const existingClient = await this.clientRepository.findOne({ where: { email: createClientDto.email } });
-    if (existingClient) {
-      throw new BadRequestException('Este e-mail já está cadastrado.');
-    } */
-    return this.customerRepository.createCustomer(createCustomerDto);
+    if (existingCustomer) {
+      throw new BadRequestException(
+        `Cliente com CPF/CNPJ ${dto.cpfCnpj} já existe.`,
+      );
+    }
+
+    return this.customerRepository.createCustomer(dto);
+  }
+  async findAll(): Promise<Customer[]> {
+    try {
+      return this.customerRepository.getAllCustomers();
+    } catch (error) {
+      throw new BadRequestException('Erro ao buscar clientes.' + error.message);
+    }
   }
 
-  async getAllCustomer(): Promise<Customer[]> {
-    return this.customerRepository.getAllCustomers();
-  }
+  async findOne(filter: {
+    id?: number;
+    cpfcnpj?: string;
+    name?: string;
+  }): Promise<Customer> {
+    if (!filter.id && !filter.cpfcnpj) {
+      throw new Error('Você deve informar id ou cpfcnpj para busca');
+    }
 
-  async getCustomerById(id: number): Promise<Customer> {
-    const customer = await this.customerRepository.getCustomerById(id);
+    const customer = await this.customerRepository.getOneCustomer(filter);
     if (!customer) {
-      throw new NotFoundException(`Cliente com o ID ${id} não existe`);
+      throw new NotFoundException(
+        `Cliente não encontrado com os critérios fornecidos.`,
+      );
     }
     return customer;
   }
 
-  async deleteCustomer(id: number): Promise<void> {
-    const customer = await this.customerRepository.getCustomerById(id);
+  async update(id: number, dto: UpdateCustomerDto): Promise<Customer> {
+    const customer = await this.customerRepository.getOneCustomer({ id });
     if (!customer) {
-      throw new NotFoundException(`Cliente com o ID ${id} não existe`);
+      throw new NotFoundException(`Cliente com ID ${id} não encontrado.`);
     }
-    await this.customerRepository.deleteCustomer(id);
+    const updatedCustomer = Object.assign(customer, dto);
+    return this.customerRepository.createCustomer(updatedCustomer);
+  }
+
+  async remove(filter: { id?: number; cpfcnpj?: string }): Promise<void> {
+    if (!filter.id && !filter.cpfcnpj) {
+      throw new Error('Você deve informar id ou cpfcnpj para deletar');
+    }
+    try {
+      await this.customerRepository.deleteCustomer(filter);
+    } catch (error) {
+      throw new BadRequestException(
+        `Erro ao deletar cliente: ${error.message}`,
+      );
+    }
   }
 }

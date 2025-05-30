@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { Customer } from './entities/customer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCustomerDto } from './dto/create-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomerRepository {
@@ -17,33 +18,51 @@ export class CustomerRepository {
   }
 
   async getAllCustomers(): Promise<Customer[]> {
-    return this.repo.find();
+    return await this.repo.find({
+      relations: ['address'],
+    });
   }
 
   async getOneCustomer(filter: {
     id?: number;
     cpfcnpj?: string;
-  }): Promise<Customer | Error> {
-    try {
-      if (filter.id) {
-        const customer = await this.repo.findOneBy({ id: filter.id });
-        if (!Customer) {
-          throw new Error(`Cliente com ID ${filter.id} não encontrado.`);
-        }
-        return customer;
-      }
-      if (filter.cpfcnpj) {
-        const customer = await this.repo.findOneBy({ cpfCnpj: filter.cpfcnpj });
-        if (!customer) {
-          throw new Error(
-            `Cliente com CPF/CNPJ ${filter.cpfcnpj} não encontrado.`,
-          );
-        }
-        return customer;
-      }
-      throw new Error('É necessário informar o id ou o cpfcnpj para busca');
-    } catch (error) {
-      throw new Error(`Erro ao buscar cliente: ${error.message}`);
+    name?: string;
+  }): Promise<Customer> {
+    if (filter.id) {
+      return await this.repo.findOneBy({ id: filter.id });
     }
+
+    if (filter.cpfcnpj) {
+      return await this.repo.findOneBy({ cpfCnpj: filter.cpfcnpj });
+    }
+
+    if (filter.name) {
+      return await this.repo.findOneBy({ name: filter.name });
+    }
+
+    return null;
+  }
+
+  async deleteCustomer(filter: {
+    id?: number;
+    cpfcnpj?: string;
+  }): Promise<void> {
+    if (filter.id) {
+      await this.repo.delete(filter.id);
+      return;
+    }
+    if (filter.cpfcnpj) {
+      await this.repo.delete({ cpfCnpj: filter.cpfcnpj });
+      return;
+    }
+  }
+
+  async updateCustomer(
+    filter: { id?: number; cpfcnpj?: string },
+    dto: UpdateCustomerDto,
+  ): Promise<Customer | Error> {
+    const customer = await this.getOneCustomer(filter);
+    const updatedCustomer = Object.assign(customer, dto);
+    return this.repo.save(updatedCustomer);
   }
 }

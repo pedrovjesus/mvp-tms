@@ -1,4 +1,12 @@
-import { IsBoolean, IsEmail, IsOptional, MaxLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsEmail,
+  IsOptional,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
+import { CreateAddressDto } from 'src/adress/dto/create-address.dto';
 
 export class updateEmployerDto {
   @IsOptional()
@@ -36,4 +44,8 @@ export class updateEmployerDto {
   @IsOptional()
   @IsBoolean({ message: 'O campo ativo deve ser um booleano' })
   active?: boolean;
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateAddressDto)
+  address: CreateAddressDto;
 }

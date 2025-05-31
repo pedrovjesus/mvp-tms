@@ -1,10 +1,13 @@
+import { Address } from 'src/adress/entities/address.entity';
 import { Order } from 'src/orders/entity/order.entity';
 import { Trip } from 'src/trips/entity/trip.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -55,6 +58,10 @@ export class Employer {
 
   @OneToMany(() => Trip, (trip) => trip.driverId)
   tripsId: Trip[];
+
+  @OneToOne(() => Address, { cascade: true, eager: true })
+  @JoinColumn()
+  address: Address;
 
   @CreateDateColumn()
   createdAt: Date;

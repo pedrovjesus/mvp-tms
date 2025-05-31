@@ -1,5 +1,12 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsEmail, IsNotEmpty, MaxLength } from 'class-validator';
+import {
+  IsDate,
+  IsEmail,
+  IsNotEmpty,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
+import { CreateAddressDto } from 'src/adress/dto/create-address.dto';
 
 export class createEmployerDto {
   @IsNotEmpty({ message: 'O nome é obrigatório' })
@@ -35,6 +42,9 @@ export class createEmployerDto {
   @IsDate()
   @Type(() => Date)
   admissionDate: Date;
+  @ValidateNested()
+  @Type(() => CreateAddressDto)
+  address: CreateAddressDto;
   @IsNotEmpty({ message: 'A escala é obrigatório' })
   workSchedule: string;
 }

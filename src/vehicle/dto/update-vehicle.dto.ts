@@ -1,16 +1,22 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
-export class CreateVehicleDto {
+export class UpdateVehicleDto {
+  @IsOptional()
   @IsNotEmpty({ message: 'a placa é obrigatório' })
-  vehicle_plate: string;
+  vehicle_plate?: string;
+  @IsOptional()
   @IsNotEmpty({ message: 'O modelo é obrigatório' })
-  model: string;
+  model?: string;
+  @IsOptional()
   @IsNotEmpty({ message: 'O ano é obrigatório' })
-  year: number;
+  year?: number;
+  @IsOptional()
   @IsNotEmpty({ message: 'A marca é obrigatório' })
-  brand: string;
+  brand?: string;
+  @IsOptional()
   @IsNotEmpty({ message: 'O chassi é obrigatório' })
-  chassi_number: string;
+  chassi_number?: string;
+  @IsOptional()
   @IsNotEmpty({ message: 'O renavam é obrigatório' })
-  renavam: string;
+  renavam?: string;
 }

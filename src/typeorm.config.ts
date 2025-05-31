@@ -1,15 +1,24 @@
-// src/typeorm.config.ts
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import * as path from 'path';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const databaseName =
+  process.env.NODE_ENV === 'test' ? 'base_test' : process.env.DATABASE_NAME;
 
 export const AppDataSource = new DataSource({
-  type: 'mysql',
-  host: '127.0.0.1',
-  port: 3306,
-  username: 'root',
-  password: '',
-  database: 'base',
+  type: process.env.DATABASE_TYPE as
+    | 'mysql'
+    | 'postgres'
+    | 'sqlite'
+    | 'mariadb',
+  host: process.env.HOST_DATABASE,
+  port: parseInt(process.env.DATABASE_PORT || '3306'),
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: databaseName,
   entities: [__dirname + '/../src/**/*.entity{.ts,.js}'],
   migrations: [path.join(__dirname, 'migrations', '*.{ts,js}')],
   synchronize: false,

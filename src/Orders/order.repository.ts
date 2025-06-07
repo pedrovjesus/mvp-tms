@@ -42,7 +42,6 @@ export class OrderRepository {
     const updateOrder = Object.assign(order, dto);
     return this.repo.save(updateOrder);
   }
-  // order.repository.ts
   async createWithRelations(data: {
     origin: string;
     destination: string;

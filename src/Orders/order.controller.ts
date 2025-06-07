@@ -1,39 +1,51 @@
 import {
-  Body,
   Controller,
   Get,
-  Param,
-  Patch,
   Post,
+  Put,
+  Param,
+  Body,
+  HttpStatus,
+  HttpCode,
+  ParseIntPipe,
+  UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order';
 import { OrderService } from './order.service';
+import { CreateOrderDto } from './dto/create-order';
+import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entity/order.entity';
-import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  async createOrder(
-    @Body(new ValidationPipe()) createOrderDto: CreateOrderDto,
-  ): Promise<Order> {
-    return this.orderService.createOrder(createOrderDto);
+  @HttpCode(HttpStatus.CREATED)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async create(@Body() dto: CreateOrderDto): Promise<Order> {
+    return this.orderService.create(dto);
   }
 
   @Get()
-  async getAllOrders(): Promise<Order[]> {
-    return this.orderService.getAllOrders();
-  }
-  @Get(':id')
-  async getOrderById(@Param('id') id: string): Promise<Order> {
-    return this.orderService.getOrderById(+id);
+  @HttpCode(HttpStatus.OK)
+  async findAll(): Promise<Order[]> {
+    return this.orderService.findAll();
   }
 
-  @Patch('status')
-  async updateStatusOrder(@Body() updateOrderStatusDto: UpdateOrderStatusDto) {
-    return await this.orderService.updateOrderStatus(updateOrderStatusDto);
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Order> {
+    return this.orderService.findOne({ id });
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateOrderDto,
+  ): Promise<Order> {
+    return this.orderService.update(id, dto);
   }
 }

@@ -75,7 +75,6 @@ A API estará disponível em `http://localhost:3000`.
 
 - `npm run start` - Inicia em modo de produção
 - `npm run start:dev` - Inicia em modo de desenvolvimento (Watch)
-- `npm run test` - Executa testes unitários
 - `npm run lint` - Executa linting
 - `npm run typeorm` - Helper para comandos TypeORM
 

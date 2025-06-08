@@ -83,6 +83,5 @@ A API estará disponível em `http://localhost:3000`.
 
 ## 🛣️ Próximos Passos / Roadmap
 - Envio de dados de ordem via pdf ✅
-- Testes end-to-end (e2e)
 
 ---

@@ -21,33 +21,19 @@ Um projeto pessoal que nasceu com a ideia de solucionar problemas que vejo no di
 1. **Clientes & Pedidos**
 
    - Cadastro de clientes (pessoa física ou jurídica)
-   - Registro de pedidos e itens de pedido
 
-2. **Rotas & Paradas**
+2. **Rotas**
 
-   - Definição de rotas reutilizáveis com paradas sequenciais (latitude/longitude)
-   - Planejamento de janelas de chegada
-   - Em desenvolvimento*
+   - Definição de rotas
 
 3. **Veículos & Motoristas**
 
    - Cadastro de veículos e tipos de veículos
-   - Histórico de IPVA, revisões e consumo (km/L)
-   - Cadastro de motoristas, disponibilidade e vínculo com contas de usuário
-   - Em desenvolvimento*
+   - Cadastro de motoristas
 
-4. **Controle de Custos**
+4. **Controle de pedidos**
 
-   - Registro de custos de viagem (pedágio, alimentação, combustível)
-   - Cálculo automático de IPVA anual e média de consumo
-   - Custos de manutenção e revisões de veículos
-   - Em desenvolvimento*
-
-5. **Segurança & Permissões**
-
-   - Autenticação de usuários
-   - Perfis e permissões granular para acesso a recursos
-   - Em desenvolvimento*
+   - Registro de ordens de transporte
 
 ---
 
@@ -96,11 +82,7 @@ A API estará disponível em `http://localhost:3000`.
 ---
 
 ## 🛣️ Próximos Passos / Roadmap
-
-- Implementar respostas com KPIs (tempo médio de entrega, consumo médio)
-- Implementar versionamento de API (v1, v2)
-- Implementar logica de controle de gastos
-- Envio de dados excel de frota, funcionarios e despesas
+- Envio de dados de ordem via pdf ✅
 - Testes end-to-end (e2e)
 
 ---

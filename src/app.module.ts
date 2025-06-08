@@ -6,7 +6,6 @@ import { VehicleModule } from './vehicle/vehicle.module';
 import { EmployerModule } from './employer/employer.module';
 import { AddressModule } from './adress/address.module';
 import { OrderModule } from './orders/order.module';
-import { TripModule } from './trips/trip.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -18,7 +17,6 @@ import { AppService } from './app.service';
     EmployerModule,
     AddressModule,
     OrderModule,
-    TripModule,
   ],
   controllers: [AppController],
   providers: [AppService],

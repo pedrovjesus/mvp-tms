@@ -22,13 +22,17 @@ export class OrderRepository {
 
   async getAllOrder(): Promise<Order[]> {
     return this.repo.find({
-      relations: ['customer', 'vehicle', 'driver', 'statusHistory', 'tripsId'],
+      relations: ['customer', 'vehicle', 'driver', 'statusHistory'],
     });
   }
 
   async getOneOrder(filter: { id: number }): Promise<Order> {
     if (filter.id) {
-      return await this.repo.findOneBy({ id: filter.id });
+      return await this.repo.findOne({
+        where: { id: filter.id },
+        //puxar a relação entre outras tabelas
+        relations: ['customer', 'driver', 'vehicle', 'statusHistory'],
+      });
     }
 
     return null;

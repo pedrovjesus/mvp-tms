@@ -6,42 +6,213 @@ import { IOrder } from './order.interface';
 export class PdfService {
   private buildHtml(order: IOrder): string {
     return `
-      <html>
-      <head>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 20px; }
-          h1, h2 { color: #333; }
-          p { margin: 5px 0; }
-          ul { padding-left: 20px; }
-          li { margin-bottom: 4px; }
-        </style>
-      </head>
-      <body>
-        <h1>Order #${order.id}</h1>
-        <p><strong>Origin:</strong> ${order.origin}</p>
-        <p><strong>Destination:</strong> ${order.destination}</p>
-        <p><strong>Departure Date:</strong> ${order.departureDate}</p>
-        <p><strong>Arrival Date:</strong> ${order.arrivalDate}</p>
-        <p><strong>Status:</strong> ${order.status}</p>
-        <p><strong>Created At:</strong> ${order.createdAt}</p>
+     <html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      :root {
+        --primary: #1a237e;
+        --secondary: #1565c0;
+        --text: #2c3e50;
+        --bg-section: #ffffff;
+        --border-radius: 6px;
+      }
 
-        <h2>Customer</h2>
-        <p>${order.customer.name}</p>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 40px;
+        color: var(--text);
+        background-color: #fff;
+      }
 
-        <h2>Vehicle</h2>
-        <p>Plate: ${order.vehicle.plate}</p>
+      .header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 12px;
+        margin-bottom: 24px;
+      }
 
-        <h2>Driver</h2>
-        <p>${order.driver.name}</p>
+      .header h1 {
+        font-size: 22px;
+        color: var(--primary);
+        margin: 0;
+      }
 
-        <h2>Status History</h2>
-        <ul>
+      .header p {
+        margin: 4px 0 0;
+        font-size: 13px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 2px 6px;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 10px;
+        background: var(--secondary);
+        color: #fff;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        padding: 16px;
+        background: var(--bg-section);
+        border-radius: var(--border-radius);
+        border: 1px solid #e0e0e0;
+      }
+
+      .section h2 {
+        font-size: 16px;
+        color: var(--secondary);
+        margin: 0 0 8px;
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .info-item {
+        flex: 1;
+        min-width: 180px;
+        margin-bottom: 8px;
+      }
+
+      .label {
+        font-weight: bold;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 6px 8px;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 13px;
+      }
+
+      th {
+        background: #f5f7fa;
+        font-weight: bold;
+      }
+
+      .footer {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .signature {
+        width: 45%;
+        border-top: 1px solid var(--text);
+        text-align: center;
+        padding-top: 6px;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div>
+        <h1>Empresa X</h1>
+        <p>CNPJ: 00.000.000/0000-00</p>
+      </div>
+      <div style="text-align: right">
+        <h1>Pedido Nº <span>${order.id}</span></h1>
+        <p>Status: <span class="badge">Aberta</span></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Cliente</h2>
+      <div class="info-row">
+        <div class="info-item">
+          <p><span class="label">Nome:</span> ${order.customer.name}</p>
+          <p><span class="label">CPF/CNPJ:</span> ${order.customer}</p>
+        </div>
+        <div class="info-item">
+          <p><span class="label">Endereço:</span> ${order.customer}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Origem & Destino</h2>
+      <div class="info-row">
+        <div class="info-item">
+          <p><span class="label">Origem:</span> ${order.origin}</p>
+        </div>
+        <div class="info-item">
+          <p><span class="label">Destino:</span> ${order.destination}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Datas</h2>
+      <div class="info-row">
+        <div class="info-item">
+          <p><span class="label">Partida:</span> ${order.departureDate}</p>
+        </div>
+        <div class="info-item">
+          <p><span class="label">Chegada:</span> ${order.arrivalDate}</p>
+        </div>
+        <div class="info-item">
+          <p><span class="label">Criada em:</span> ${order.createdAt}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Veículo & Motorista</h2>
+      <div class="info-row">
+        <div class="info-item">
+          <p><span class="label">Placa:</span> ${order.vehicle.plate}</p>
+        </div>
+        <div class="info-item">
+          <p><span class="label">Motorista:</span> ${order.driver.name}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Histórico de Status</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
           ${order.statusHistory
-            .map((sh) => `<li>${sh.date} - <strong>${sh.status}</strong></li>`)
+            .map(
+              (sh) => `
+          <tr>
+            <td>${sh.date}</td>
+            <td>${sh.status}</td>
+          </tr>
+          `,
+            )
             .join('')}
-        </ul>
-      </body>
-      </html>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div class="signature">Assinatura Recebimento</div>
+      <div class="signature">Data: ______ / ______ / ______</div>
+    </div>
+  </body>
+</html>
+
     `;
   }
 

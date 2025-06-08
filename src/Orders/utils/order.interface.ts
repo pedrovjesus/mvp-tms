@@ -1,4 +1,3 @@
-// uso em pdf service
 export interface IOrder {
   id: number;
   origin: string;
@@ -9,12 +8,31 @@ export interface IOrder {
   createdAt: Date;
   customer: {
     name: string;
+    email: string;
+    phone: string;
+    cpfCnpj: string;
+    address: {
+      cep: string;
+      number: number;
+      complement: string;
+      street: string;
+      city: string;
+      uf: string;
+      neighborhood: string;
+    };
   };
   vehicle: {
-    plate: string;
+    vehicle_plate: string;
+    model: string;
+    year: number;
+    brand: string;
+    chassi_number: string;
   };
   driver: {
     name: string;
+    phone: string;
+    email: string;
+    cpf: string;
   };
   statusHistory: {
     date: Date;

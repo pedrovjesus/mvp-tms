@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppDataSource } from './typeorm.config';
+import { createDataSource } from './typeorm.config';
 import { CustomerModule } from './customer/customer.module';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { EmployerModule } from './employer/employer.module';
@@ -9,9 +9,12 @@ import { OrderModule } from './orders/order.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+const env = process.env.NODE_ENV === 'test' ? 'test' : 'default';
+const dataSource = createDataSource(env);
+
 @Module({
   imports: [
-    TypeOrmModule.forRoot(AppDataSource.options),
+    TypeOrmModule.forRoot(dataSource.options),
     CustomerModule,
     VehicleModule,
     EmployerModule,

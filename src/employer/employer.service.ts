@@ -68,6 +68,9 @@ export class EmployerService {
     }
   }
   async delete(filter: { id?: number; cpf?: string }): Promise<void> {
+    if (!filter.id && !filter.cpf) {
+      throw new Error('Você deve informar id ou cpfcnpj para deletar');
+    }
     try {
       await this.employerRepository.deleteEmployer(filter);
     } catch (error) {

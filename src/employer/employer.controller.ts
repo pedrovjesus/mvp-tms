@@ -82,7 +82,7 @@ export class EmployerController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Deleta um empregado por ID ou CPF' })
   @ApiResponse({ status: 204, description: 'Empregado deletado com sucesso' })
-  @ApiResponse({ status: 404, description: 'Empregado não encontrado' })
+  @ApiResponse({ status: 404, description: 'Erro ao deletar empregador' })
   @ApiQuery({ name: 'id', required: false, type: Number })
   @ApiQuery({ name: 'cpf', required: false, type: String })
   async delete(

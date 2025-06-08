@@ -95,12 +95,13 @@ export class CustomerController {
   @ApiQuery({ name: 'id', required: false, type: Number })
   @ApiQuery({ name: 'cpfcnpj', required: false, type: String })
   @ApiResponse({ status: 204, description: 'Cliente deletado com sucesso.' })
+  @ApiResponse({ status: 404, description: 'Erro ao deletar cliente.' })
   async delete(
     @Query('id') id?: string,
     @Query('cpfcnpj') cpfcnpj?: string,
   ): Promise<void> {
     const idNumber = id ? Number(id) : undefined;
 
-    await this.customerService.remove({ id: idNumber, cpfcnpj });
+    await this.customerService.delete({ id: idNumber, cpfcnpj });
   }
 }

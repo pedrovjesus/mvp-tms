@@ -59,7 +59,7 @@ export class CustomerService {
     return this.customerRepository.createCustomer(updatedCustomer);
   }
 
-  async remove(filter: { id?: number; cpfcnpj?: string }): Promise<void> {
+  async delete(filter: { id?: number; cpfcnpj?: string }): Promise<void> {
     if (!filter.id && !filter.cpfcnpj) {
       throw new Error('Você deve informar id ou cpfcnpj para deletar');
     }

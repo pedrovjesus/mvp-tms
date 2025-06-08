@@ -35,7 +35,7 @@ export class CustomerController {
   @ApiResponse({
     status: 201,
     description: 'Cliente criado com sucesso.',
-    type: Customer,
+    type: CreateCustomerDto,
   })
   async create(
     @Body(ValidationPipe) dto: CreateCustomerDto,
@@ -53,7 +53,7 @@ export class CustomerController {
   @ApiResponse({
     status: 200,
     description: 'Busca realizada com sucesso.',
-    type: [Customer],
+    type: [FindCustomerDto],
   })
   async find(@Query() query: FindCustomerDto): Promise<Customer | Customer[]> {
     const { id, cpfcnpj, name } = query;
@@ -79,7 +79,7 @@ export class CustomerController {
   @ApiResponse({
     status: 200,
     description: 'Cliente atualizado com sucesso.',
-    type: Customer,
+    type: UpdateCustomerDto,
   })
   async update(
     @Query('id') id: string,

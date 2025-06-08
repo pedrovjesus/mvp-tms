@@ -36,7 +36,7 @@ export class AddressController {
   @ApiResponse({
     status: 201,
     description: 'Endereço criado com sucesso.',
-    type: Address,
+    type: CreateAddressDto,
   })
   async create(
     @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
@@ -54,7 +54,7 @@ export class AddressController {
   @ApiResponse({
     status: 200,
     description: 'Busca realizada com sucesso.',
-    type: [Address],
+    type: [FindAddressDto],
   })
   async findOne(@Query() query: FindAddressDto): Promise<Address | Address[]> {
     const { id, cep } = query;
@@ -89,7 +89,7 @@ export class AddressController {
   @ApiResponse({
     status: 200,
     description: 'Endereço atualizado com sucesso.',
-    type: Address,
+    type: UpdateAddressDto,
   })
   async update(
     @Query('id') id: string,

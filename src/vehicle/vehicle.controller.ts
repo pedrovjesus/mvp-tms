@@ -37,7 +37,7 @@ export class VehicleController {
   @ApiResponse({
     status: 201,
     description: 'Veículo criado com sucesso',
-    type: Vehicle,
+    type: CreateVehicleDto,
   })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiBody({ type: CreateVehicleDto })
@@ -52,7 +52,7 @@ export class VehicleController {
   @ApiResponse({
     status: 200,
     description: 'Veículos encontrados',
-    type: [Vehicle],
+    type: [FindVehicleDto],
   })
   @ApiQuery({ name: 'id', required: false, type: Number })
   @ApiQuery({ name: 'plate', required: false, type: String })
@@ -100,7 +100,7 @@ export class VehicleController {
   @ApiResponse({
     status: 200,
     description: 'Veículo atualizado com sucesso',
-    type: Vehicle,
+    type: UpdateVehicleDto,
   })
   @ApiResponse({ status: 404, description: 'Veículo não encontrado' })
   @ApiQuery({ name: 'id', required: true, type: Number })

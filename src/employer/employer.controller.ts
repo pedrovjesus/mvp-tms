@@ -36,7 +36,7 @@ export class EmployerController {
   @ApiResponse({
     status: 201,
     description: 'Empregado criado com sucesso',
-    type: Employer,
+    type: createEmployerDto,
   })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiBody({ type: createEmployerDto })
@@ -53,7 +53,7 @@ export class EmployerController {
   @ApiResponse({
     status: 200,
     description: 'Empregados encontrados',
-    type: [Employer],
+    type: [FindEmployerDto],
   })
   @ApiQuery({ name: 'id', required: false, type: Number })
   @ApiQuery({ name: 'cpf', required: false, type: String })
@@ -98,7 +98,7 @@ export class EmployerController {
   @ApiResponse({
     status: 200,
     description: 'Empregado atualizado com sucesso',
-    type: Employer,
+    type: updateEmployerDto,
   })
   @ApiResponse({ status: 404, description: 'Empregado não encontrado' })
   @ApiQuery({ name: 'id', required: true, type: Number })

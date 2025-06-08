@@ -43,7 +43,7 @@ export class OrderController {
   @ApiResponse({
     status: 201,
     description: 'Ordem criada com sucesso',
-    type: Order,
+    type: CreateOrderDto,
   })
   async create(@Body() dto: CreateOrderDto): Promise<Order> {
     return this.orderService.create(dto);
@@ -52,7 +52,11 @@ export class OrderController {
   @Get()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Retorna todas as ordens' })
-  @ApiResponse({ status: 200, description: 'Lista de ordens', type: [Order] })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de ordens',
+    type: [CreateOrderDto],
+  })
   async findAll(): Promise<Order[]> {
     return this.orderService.findAll();
   }
@@ -61,7 +65,11 @@ export class OrderController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Retorna uma ordem pelo ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID da ordem' })
-  @ApiResponse({ status: 200, description: 'Ordem encontrada', type: Order })
+  @ApiResponse({
+    status: 200,
+    description: 'Ordem encontrada',
+    type: CreateOrderDto,
+  })
   @ApiResponse({ status: 404, description: 'Ordem não encontrada' })
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Order> {
     return this.orderService.findOne({ id });
@@ -73,7 +81,11 @@ export class OrderController {
   @ApiOperation({ summary: 'Atualiza uma ordem pelo ID' })
   @ApiParam({ name: 'id', type: Number, description: 'ID da ordem' })
   @ApiBody({ type: UpdateOrderDto })
-  @ApiResponse({ status: 200, description: 'Ordem atualizada', type: Order })
+  @ApiResponse({
+    status: 200,
+    description: 'Ordem atualizada',
+    type: UpdateOrderDto,
+  })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateOrderDto,

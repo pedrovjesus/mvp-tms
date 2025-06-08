@@ -257,8 +257,7 @@ export class PdfService {
 
       await browser.close();
       return Buffer.from(pdfBuffer);
-    } catch (error) {
-      console.error('Erro em generatePdfFromHtml:', error);
+    } catch (Error) {
       throw new Error('Erro ao gerar o PDF');
     }
   }

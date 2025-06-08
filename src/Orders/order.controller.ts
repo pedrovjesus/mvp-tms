@@ -19,7 +19,15 @@ import { PdfService } from './utils/pdf.service';
 import { CreateOrderDto } from './dto/create-order';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entity/order.entity';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from '@nestjs/swagger';
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrderController {
   constructor(
@@ -30,18 +38,31 @@ export class OrderController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOperation({ summary: 'Cria uma nova ordem' })
+  @ApiBody({ type: CreateOrderDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Ordem criada com sucesso',
+    type: Order,
+  })
   async create(@Body() dto: CreateOrderDto): Promise<Order> {
     return this.orderService.create(dto);
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Retorna todas as ordens' })
+  @ApiResponse({ status: 200, description: 'Lista de ordens', type: [Order] })
   async findAll(): Promise<Order[]> {
     return this.orderService.findAll();
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Retorna uma ordem pelo ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID da ordem' })
+  @ApiResponse({ status: 200, description: 'Ordem encontrada', type: Order })
+  @ApiResponse({ status: 404, description: 'Ordem não encontrada' })
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Order> {
     return this.orderService.findOne({ id });
   }
@@ -49,6 +70,10 @@ export class OrderController {
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiOperation({ summary: 'Atualiza uma ordem pelo ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID da ordem' })
+  @ApiBody({ type: UpdateOrderDto })
+  @ApiResponse({ status: 200, description: 'Ordem atualizada', type: Order })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateOrderDto,
@@ -58,12 +83,16 @@ export class OrderController {
 
   @Get(':id/pdf')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Gera e retorna o PDF da ordem pelo ID' })
+  @ApiParam({ name: 'id', type: Number, description: 'ID da ordem' })
+  @ApiResponse({ status: 200, description: 'Retorna um PDF' })
+  @ApiResponse({ status: 404, description: 'Ordem não encontrada' })
   async getPdf(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     try {
       const orderEntity = await this.orderService.findOne({ id });
 
       if (!orderEntity) {
-        throw new NotFoundException('Order not found');
+        throw new NotFoundException(' Ordem não encontrada');
       }
 
       const orderForPdf = {

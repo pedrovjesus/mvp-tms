@@ -71,9 +71,7 @@ export class OrderService {
 
     const order = await this.orderRepository.getOneOrder(filter);
     if (!order) {
-      throw new NotFoundException(
-        `Order não encontrado com os critérios fornecidos.`,
-      );
+      throw new NotFoundException(`Ordem não encontrada`);
     }
     try {
       return order;

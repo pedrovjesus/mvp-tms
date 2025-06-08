@@ -90,7 +90,7 @@ export class OrderService {
       return updated;
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw error; // repassa a exceção original se já for NotFound
+        throw error;
       }
       throw new BadRequestException(
         `Erro ao atualizar ordem: ${error.message}`,

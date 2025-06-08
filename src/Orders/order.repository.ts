@@ -30,7 +30,6 @@ export class OrderRepository {
     if (filter.id) {
       return await this.repo.findOne({
         where: { id: filter.id },
-        //puxar a relação entre outras tabelas
         relations: ['customer', 'driver', 'vehicle', 'statusHistory'],
       });
     }

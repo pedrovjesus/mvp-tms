@@ -57,6 +57,7 @@ export class OrderController {
   }
 
   @Get(':id/pdf')
+  @HttpCode(HttpStatus.OK)
   async getPdf(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     try {
       const orderEntity = await this.orderService.findOne({ id });

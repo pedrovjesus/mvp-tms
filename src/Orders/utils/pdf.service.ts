@@ -6,7 +6,7 @@ import { IOrder } from './order.interface';
 export class PdfService {
   private buildHtml(order: IOrder): string {
     return `
-     <html>
+  <html>
   <head>
     <meta charset="UTF-8" />
     <style>
@@ -126,7 +126,7 @@ export class PdfService {
       </div>
       <div style="text-align: right">
         <h1>Pedido Nº <span>${order.id}</span></h1>
-        <p>Status: <span class="badge">Aberta</span></p>
+        <p>Status: <span class="badge">${order.status}</span></p>
       </div>
     </div>
 
@@ -135,10 +135,17 @@ export class PdfService {
       <div class="info-row">
         <div class="info-item">
           <p><span class="label">Nome:</span> ${order.customer.name}</p>
-          <p><span class="label">CPF/CNPJ:</span> ${order.customer}</p>
+          <p><span class="label">CPF/CNPJ:</span> ${order.customer.cpfCnpj}</p>
+          <p><span class="label">Email:</span> ${order.customer.email}</p>
+          <p><span class="label">Telefone:</span> ${order.customer.phone}</p>
         </div>
         <div class="info-item">
-          <p><span class="label">Endereço:</span> ${order.customer}</p>
+          <p><span class="label">Endereço:</span> 
+            ${order.customer.address.street}, ${order.customer.address.number}
+            ${order.customer.address.complement ? ` - ${order.customer.address.complement}` : ''}
+            - ${order.customer.address.neighborhood}, ${order.customer.address.city} - ${order.customer.address.uf}
+            CEP: ${order.customer.address.cep}
+          </p>
         </div>
       </div>
     </div>
@@ -159,25 +166,42 @@ export class PdfService {
       <h2>Datas</h2>
       <div class="info-row">
         <div class="info-item">
-          <p><span class="label">Partida:</span> ${order.departureDate}</p>
+          <p><span class="label">Partida:</span> ${new Date(order.departureDate).toLocaleDateString()}</p>
         </div>
         <div class="info-item">
-          <p><span class="label">Chegada:</span> ${order.arrivalDate}</p>
+          <p><span class="label">Chegada:</span> ${new Date(order.arrivalDate).toLocaleDateString()}</p>
         </div>
         <div class="info-item">
-          <p><span class="label">Criada em:</span> ${order.createdAt}</p>
+          <p><span class="label">Criada em:</span> ${new Date(order.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
     </div>
 
     <div class="section">
-      <h2>Veículo & Motorista</h2>
+      <h2>Veículo</h2>
       <div class="info-row">
         <div class="info-item">
-          <p><span class="label">Placa:</span> ${order.vehicle.plate}</p>
+          <p><span class="label">Placa:</span> ${order.vehicle.vehicle_plate}</p>
+          <p><span class="label">Modelo:</span> ${order.vehicle.model}</p>
         </div>
         <div class="info-item">
-          <p><span class="label">Motorista:</span> ${order.driver.name}</p>
+          <p><span class="label">Marca:</span> ${order.vehicle.brand}</p>
+          <p><span class="label">Ano:</span> ${order.vehicle.year}</p>
+          <p><span class="label">Chassi:</span> ${order.vehicle.chassi_number}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Motorista</h2>
+      <div class="info-row">
+        <div class="info-item">
+          <p><span class="label">Nome:</span> ${order.driver.name}</p>
+          <p><span class="label">CPF:</span> ${order.driver.cpf}</p>
+        </div>
+        <div class="info-item">
+          <p><span class="label">Telefone:</span> ${order.driver.phone}</p>
+          <p><span class="label">Email:</span> ${order.driver.email}</p>
         </div>
       </div>
     </div>
@@ -195,10 +219,10 @@ export class PdfService {
           ${order.statusHistory
             .map(
               (sh) => `
-          <tr>
-            <td>${sh.date}</td>
-            <td>${sh.status}</td>
-          </tr>
+            <tr>
+              <td>${new Date(sh.date).toLocaleDateString()}</td>
+              <td>${sh.status}</td>
+            </tr>
           `,
             )
             .join('')}
@@ -211,9 +235,8 @@ export class PdfService {
       <div class="signature">Data: ______ / ______ / ______</div>
     </div>
   </body>
-</html>
-
-    `;
+  </html>
+  `;
   }
 
   async generatePdfFromHtml(order: IOrder): Promise<Buffer> {

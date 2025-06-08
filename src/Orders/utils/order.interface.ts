@@ -14,7 +14,7 @@ export interface IOrder {
     address: {
       cep: string;
       number: number;
-      complement: string;
+      complement?: string;
       street: string;
       city: string;
       uf: string;

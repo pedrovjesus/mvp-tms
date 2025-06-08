@@ -59,7 +59,6 @@ export class OrderController {
   @Get(':id/pdf')
   async getPdf(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     try {
-      // Buscar a ordem completa no service
       const orderEntity = await this.orderService.findOne({ id });
 
       if (!orderEntity) {
@@ -67,7 +66,6 @@ export class OrderController {
       }
 
       const orderForPdf = {
-        //mapeia a ordem
         id: orderEntity.id,
         origin: orderEntity.origin,
         destination: orderEntity.destination,
@@ -77,12 +75,31 @@ export class OrderController {
         createdAt: orderEntity.createdAt,
         customer: {
           name: orderEntity.customer?.name || 'Cliente não informado',
+          cpfCnpj: orderEntity.customer?.cpfCnpj || '',
+          email: orderEntity.customer?.email || '',
+          phone: orderEntity.customer?.phone || '',
+          address: {
+            street: orderEntity.customer?.address?.street || '',
+            number: Number(orderEntity.customer?.address?.number) || 0,
+            complement: orderEntity.customer?.address?.complement || '',
+            neighborhood: orderEntity.customer?.address?.neighborhood || '',
+            city: orderEntity.customer?.address?.city || '',
+            uf: orderEntity.customer?.address?.uf || '',
+            cep: orderEntity.customer?.address?.cep || '',
+          },
         },
         vehicle: {
-          plate: orderEntity.vehicle?.vehicle_plate || 'Placa não informada',
+          vehicle_plate: orderEntity.vehicle?.vehicle_plate || '',
+          model: orderEntity.vehicle?.model || '',
+          brand: orderEntity.vehicle?.brand || '',
+          year: orderEntity.vehicle?.year || 0,
+          chassi_number: orderEntity.vehicle?.chassi_number || '',
         },
         driver: {
-          name: orderEntity.driver?.name || 'Motorista não informado',
+          name: orderEntity.driver?.name || '',
+          cpf: orderEntity.driver?.cpf || '',
+          phone: orderEntity.driver?.phone || '',
+          email: orderEntity.driver?.email || '',
         },
         statusHistory: (orderEntity.statusHistory || []).map((sh) => ({
           date: sh.changedAt,
@@ -90,13 +107,10 @@ export class OrderController {
         })),
       };
 
-      // Chamar o serviço que gera o PDF a partir do objeto acima
       const pdfBuffer = await this.pdfService.generatePdfFromHtml(orderForPdf);
 
-      // Configurar o cabeçalho da resposta para download do PDF
       res.set({
         'Content-Type': 'application/pdf',
-        //inline para abrir uma pagina ao inves de solicitar download
         'Content-Disposition': 'inline; filename="order.pdf"',
         'Content-Length': pdfBuffer.length,
       });

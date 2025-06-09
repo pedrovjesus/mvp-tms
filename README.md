@@ -1,6 +1,6 @@
 **MVP TMS - Transportation Management System**
 
-Este projeto é um **MVP** (Minimum Viable Product) de um TMS desenvolvido em **NestJS** e **TypeORM**, com foco em funcionalidades essenciais para gerenciamento de transporte: pedidos, roteirização, veículos, motoristas, acompanhamento em tempo real e controle de custos.
+Este projeto é um **MVP** (Minimum Viable Product) de um TMS desenvolvido em **NestJS** e **TypeORM**, com foco em funcionalidades essenciais para gerenciamento de transporte: pedidos, roteirização, veículos, motoristas, acompanhamento em tempo real.
 Um projeto pessoal que nasceu com a ideia de solucionar problemas que vejo no dia a dia em muitas transportadoras.
 
 ---

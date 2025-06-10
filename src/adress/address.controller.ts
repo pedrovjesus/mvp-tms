@@ -25,7 +25,7 @@ import {
   ApiNoContentResponse,
 } from '@nestjs/swagger';
 
-@ApiTags('Endereços')
+@ApiTags('Endereço')
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}

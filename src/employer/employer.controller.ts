@@ -26,7 +26,7 @@ import {
   ApiBody,
 } from '@nestjs/swagger';
 
-@ApiTags('employer')
+@ApiTags('Empregado')
 @Controller('employer')
 export class EmployerController {
   constructor(private readonly employerService: EmployerService) {}

@@ -159,7 +159,6 @@ export class OrderController {
 
       return res.end(pdfBuffer);
     } catch (error) {
-      console.error('Erro no getPdf:', error);
       throw error;
     }
   }
